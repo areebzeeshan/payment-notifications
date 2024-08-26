@@ -38,11 +38,7 @@ const loginWithEmailAndPassword = async (email, password) => {
 
 const registerWithEmailAndPassword = async (username, email, password) => {
   try {
-    const newUser = await createUserWithEmailAndPassword(
-      username,
-      email,
-      password
-    );
+    const newUser = await createUserWithEmailAndPassword(auth, email, password);
     const user = newUser.user;
     const res = await addDoc(collection(database, "users"), {
       uid: user.uid,
@@ -52,16 +48,19 @@ const registerWithEmailAndPassword = async (username, email, password) => {
     });
     return res;
   } catch (error) {
-    console.log("Error in Signing Up : ", error);
+    console.log("Error in Signing Up : ", error.message);
   }
 };
 
-const logout = async () => {
-  try {
-    await signOut(auth);
-  } catch (error) {
-    console.error("Error logging out:", error);
-  }
+const logout = () => {
+  const res = signOut(auth);
+  return res ? true : false;
 };
 
-export { database, auth, loginWithEmailAndPassword, registerWithEmailAndPassword, logout };
+export {
+  database,
+  auth,
+  loginWithEmailAndPassword,
+  registerWithEmailAndPassword,
+  logout,
+};

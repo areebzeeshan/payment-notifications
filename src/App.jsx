@@ -12,18 +12,8 @@ function App() {
   return (
     <>
       <Routes>
-
-        <Route path='/payments' element={
-          <ProtectedRoutes user={user}>
-            <Layout><Payments /></Layout>
-          </ProtectedRoutes>
-        } />
-
-        <Route path='/sign-in' element={
-          <ProtectedRoutes user={!user} redirect='/payments'>
-            <SignIn />
-          </ProtectedRoutes>
-        } />
+        <Route path='/' element={<SignIn />} />
+        <Route path='/payments' element={<Layout><Payments /></Layout>} />
         <Route path='/sign-up' element={<SignUp />} />
       </Routes>
     </>

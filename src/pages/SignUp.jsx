@@ -1,7 +1,8 @@
-import { Button, Paper, Snackbar, TextField } from '@mui/material'
+import { Box, Button, Paper, Snackbar, TextField } from '@mui/material'
 import React, { useState } from 'react'
 import { registerWithEmailAndPassword } from '../components/firebase/firebase'
 import { useNavigate } from 'react-router-dom'
+import { SnackbarToast } from '../components/ui/StyledComponents'
 
 const SignUp = () => {
 
@@ -11,23 +12,35 @@ const SignUp = () => {
         email: '',
         password: '',
     })
-    const [message, setMessage] = useState("")
     const [open, setOpen] = useState(false)
+    const [message, setMessage] = useState("")
 
     const handleChange = (e) => {
         setUserData({ ...userData, [e.target.name]: e.target.value })
+        // console.log(userData)
     }
 
-    const handleClose = () => setOpen(false)
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
 
-    const handleSignUp = async () => {
+    const handleSignUp = async (e) => {
+        e.preventDefault()
         try {
-            await registerWithEmailAndPassword(userData.username, userData.email, userData.password)
-            setMessage("Registration successful!")
-            setOpen(true)
-            navigate('/sign-in')
+            const register = await registerWithEmailAndPassword(userData.username, userData.email, userData.password)
+            if (register) {
+                setMessage("Registration successful!")
+                setOpen(true)
+                setTimeout(() => {
+                    navigate('/');
+                }, 500);
+            }
         } catch (error) {
             console.log("error in signup form submtting : ", error)
+            setMessage("Registration failed : " + error.message)
         }
     }
 
@@ -48,48 +61,60 @@ const SignUp = () => {
             }}>
                 <h2 className='text-2xl md:text-4xl lg:text-5xl font-bold'>Sign up</h2>
 
-                <TextField
-                    label='Username'
-                    name='username'
-                    type='text'
-                    className='w-full lg:w-[60%]'
-                    value={userData.username}
-                    onChange={handleChange}
-                />
-                <TextField
-                    label='Email'
-                    name='email'
-                    className='w-full lg:w-[60%]'
-                    type='text'
-                    value={userData.email}
-                    onChange={handleChange}
-                />
-                <TextField
-                    label='Password'
-                    type='password'
-                    name='password'
-                    className='w-full lg:w-[60%]'
-                    value={userData.password}
-                    onChange={handleChange}
-                />
-                <Button
-                    onClick={handleSignUp}
-                    variant='contained'
-                    className='w-full lg:w-[60%]'
+                <Box
+                    component='form'
+                    onSubmit={handleSignUp}
                     sx={{
-                        backgroundColor: "#333C4D",
-                        "&:hover": {
-                            backgroundColor: "#333C4D"
-                        }
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        gap: '2rem',
+                        width: '100%',
                     }}
                 >
-                    Sign up
-                </Button>
+                    <TextField
+                        label='Username'
+                        name='username'
+                        type='text'
+                        className='w-full lg:w-[60%]'
+                        value={userData.username}
+                        onChange={handleChange}
+                    />
+                    <TextField
+                        label='Email'
+                        name='email'
+                        className='w-full lg:w-[60%]'
+                        type='text'
+                        value={userData.email}
+                        onChange={handleChange}
+                    />
+                    <TextField
+                        label='Password'
+                        type='password'
+                        name='password'
+                        className='w-full lg:w-[60%]'
+                        value={userData.password}
+                        onChange={handleChange}
+                    />
+                    <Button
+                        type='submit'
+                        variant='contained'
+                        className='w-full lg:w-[60%]'
+                        sx={{
+                            backgroundColor: "#333C4D",
+                            "&:hover": {
+                                backgroundColor: "#333C4D"
+                            }
+                        }}
+                    >
+                        Sign up
+                    </Button>
+                </Box>
             </Paper>
-            <Snackbar
+            <SnackbarToast
                 open={open}
-                autoHideDuration={4000}
-                onClose={handleClose}
+                handleClose={handleClose}
                 message={message}
             />
         </div>
