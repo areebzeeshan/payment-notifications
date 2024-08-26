@@ -1,8 +1,6 @@
-# React + Vite
+# Payment Reminder App
+![image](https://github.com/user-attachments/assets/2e7c2df7-e3c2-4bda-9007-54edb7bd7290)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![image](https://github.com/user-attachments/assets/93e99809-083b-4730-b404-6251981eab07)
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+git clone the project 
