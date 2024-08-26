@@ -2,6 +2,8 @@ import { addDoc, collection } from "firebase/firestore";
 import { useState, useRef, useEffect } from "react";
 import { database } from "../../firebase/firebase";
 import { MySwal } from "../utils/swal";
+import { Button, TextField } from "@mui/material";
+import { grayColor, redColor } from "../utils/color";
 
 export const AddPaymentCard = ({ docId, fetchUserDocs }) => {
   const [showModal, setShowModal] = useState(false);
@@ -35,6 +37,7 @@ export const AddPaymentCard = ({ docId, fetchUserDocs }) => {
       : null;
 
     try {
+      // console.log("title : ", title)
       await addDoc(collection(database, "payment"), {
         title: title,
         description: description,
@@ -57,14 +60,18 @@ export const AddPaymentCard = ({ docId, fetchUserDocs }) => {
 
   return (
     <>
-      <button
+      <Button
+        variant="contained"
+        sx={{
+          backgroundColor: grayColor,
+          "&:hover": {
+            backgroundColor: grayColor,
+          },
+        }}
         onClick={() => setShowModal(true)}
-        className="bg-orange-600 hover:bg-orange-400 max-sm:w-1/2 max-md:w-5/12 max-lg:w-2/6 max-xl:w-2/6 max-2xl:w-3/12 2xl:w-3/12 flex flex-col  rounded p-4 gap-2 font-sans"
       >
-        <h1 className="text-xl uppercase font-extrabold mx-auto my-auto">
-          Add payment
-        </h1>
-      </button>
+        Add payment
+      </Button>
       {showModal ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -92,7 +99,7 @@ export const AddPaymentCard = ({ docId, fetchUserDocs }) => {
                     <input
                       type="title"
                       id="title"
-                      className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Title for payment"
                       required
                       ref={titleRef}
@@ -107,7 +114,7 @@ export const AddPaymentCard = ({ docId, fetchUserDocs }) => {
                     </label>
                     <textarea
                       id="description"
-                      className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Description..."
                       ref={descRef}
                       required
@@ -121,7 +128,7 @@ export const AddPaymentCard = ({ docId, fetchUserDocs }) => {
                       Due Date
                     </label>
                     <div className="relative max-w-sm">
-                      <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                      {/* <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         <svg
                           aria-hidden="true"
                           className="w-5 h-5 text-gray-500 dark:text-gray-400"
@@ -135,11 +142,11 @@ export const AddPaymentCard = ({ docId, fetchUserDocs }) => {
                             clipRule="evenodd"
                           ></path>
                         </svg>
-                      </div>
+                      </div> */}
                       <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"></div>
                       <input
                         type="date"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Select date"
                         ref={dateRef}
                         min={minDate}
@@ -163,19 +170,30 @@ export const AddPaymentCard = ({ docId, fetchUserDocs }) => {
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b gap-8">
-                  <button
-                    className="bg-red-500 text-white active:bg-red-600 font-bold  uppercase px-6 py-3 rounded shadow text-sm hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: redColor,
+                      "&:hover": {
+                        backgroundColor: redColor,
+                      },
+                    }}
                     onClick={() => setShowModal(false)}
                   >
                     Close
-                  </button>
-                  <button
-                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  </Button>
+                  <Button
                     type="submit"
+                    variant="contained"
+                    sx={{
+                      backgroundColor: grayColor,
+                      "&:hover": {
+                        backgroundColor: grayColor,
+                      },
+                    }}
                   >
                     Submit
-                  </button>
+                  </Button>
                 </div>
               </form>
             </div>

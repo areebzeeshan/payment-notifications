@@ -17,7 +17,9 @@ import { PaymentCard } from "./PaymentCard";
 import { AddPaymentCard } from "./AddPaymentCard";
 import { getToken, onMessage } from "firebase/messaging";
 import { MySwal, toast } from "../utils/swal";
-import { Box, Button, Modal, Typography } from "@mui/material";
+import { Box, Button, IconButton, Modal, Typography } from "@mui/material";
+import { Logout as LogoutIcon } from "@mui/icons-material";
+import { grayColor } from "../utils/color";
 
 async function requestPermission(docId) {
   const permission = await Notification.requestPermission();
@@ -135,7 +137,7 @@ export default function Dashboard() {
       text: "Do you want to sign out?",
       icon: "question",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: grayColor,
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes",
     }).then((result) => {
@@ -148,30 +150,20 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="w-full min-h-screen	 absolute bg-slate-300">
-      <header className="w-full bg-slate-800 py-2 text-lg text-gray-100 capitalize flex justify-between items-center">
+    <div className="w-full min-h-screen	 absolute">
+      <header className="w-full p-4 text-lg shadow-lg capitalize flex justify-between items-center">
         <span className="pl-6 text-xl">Welcome, {name?.split(" ")[0]}</span>
-        <div className="contents content-center items-center w-full">
+        <IconButton onClick={() => handleClick()}>
+          <LogoutIcon />
+        </IconButton>
+      </header>
+      <main className="w-full mb-4">
+        <div className="flex justify-end m-3">
           <AddPaymentCard
             docId={`users/${docId}`}
             fetchUserDocs={fetchUserDocs}
           />
         </div>
-        <button onClick={() => handleClick()}>
-          <img
-            className="my-4 mr-8"
-            src={Powerbutton}
-            alt="logout"
-            width={25}
-            height={25}
-            style={{
-              filter:
-                "invert(100%) sepia(96%) saturate(15%) hue-rotate(307deg) brightness(106%) contrast(103%)",
-            }}
-          />
-        </button>
-      </header>
-      <main className="w-full mb-4">
         {payments.length > 0 ? (
           <div className="w-11/12 mt-4 mx-auto">
             <div className="w-full mx-auto flex flex-wrap gap-8 ">
@@ -184,12 +176,18 @@ export default function Dashboard() {
               ))}
             </div>
             <div className="flex justify-center items-center mt-4 gap-5">
-              <button
-                className="bg-sky-500 p-4 text-white rounded-md"
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: grayColor,
+                  "&:hover": {
+                    backgroundColor: grayColor,
+                  },
+                }}
                 onClick={() => setModalOpen(true)}
               >
                 Due Payments
-              </button>
+              </Button>
             </div>
             <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
               <Box

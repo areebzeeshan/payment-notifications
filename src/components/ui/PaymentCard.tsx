@@ -4,6 +4,8 @@ import { doc, setDoc } from "firebase/firestore";
 import { database } from "../../firebase/firebase";
 import { EditPaymentCard } from "./EditPaymentCard";
 import { MySwal, toast } from "../utils/swal";
+import { Button } from "@mui/material";
+import { redColor } from "../utils/color";
 
 export const PaymentCard = ({ props, fetchUserDocs }) => {
   const { title, description, dueDate, paymentStatus } = props;
@@ -59,18 +61,24 @@ export const PaymentCard = ({ props, fetchUserDocs }) => {
       </h4>
       <p className="text-gray-500">Due Date: {transformedDate}</p>
       <div className="w-full flex justify-between mt-4">
-        <button
-          className="bg-green-600 hover:bg-green-700 text-white  py-2 px-6 rounded transition duration-200"
+        <Button
+          variant="contained"
           onClick={() => setShowModal((show) => !show)}
         >
           Edit
-        </button>
-        <button
-          className="bg-red-500 hover:bg-red-600 text-white  py-2 px-6 rounded transition duration-200"
+        </Button>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: redColor,
+            "&:hover": {
+              backgroundColor: redColor,
+            },
+          }}
           onClick={() => handleDelete()}
         >
           Delete
-        </button>
+        </Button>
       </div>
       <EditPaymentCard
         showModal={showModal}
