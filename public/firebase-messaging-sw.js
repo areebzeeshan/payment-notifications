@@ -4,13 +4,13 @@ importScripts('https://www.gstatic.com/firebasejs/9.12.0/firebase-app-compat.js'
 importScripts('https://www.gstatic.com/firebasejs/9.12.0/firebase-messaging-compat.js');
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDSxYae6HwLhzOSv7bAsG8KP5NrZ-PynDw",
-    authDomain: "payment-reminder-app-b1f7c.firebaseapp.com",
-    projectId: "payment-reminder-app-b1f7c",
-    storageBucket: "payment-reminder-app-b1f7c.appspot.com",
-    messagingSenderId: "1046232119776",
-    appId: "1:1046232119776:web:65d881bc8981924fd39385",
-    measurementId: "G-0EEJSPRDPX"
+    apiKey: "AIzaSyB0drW4BSbg9YLcoOTRxqXOq_eXLILvbXE",
+    authDomain: "payment-notifications-94adf.firebaseapp.com",
+    projectId: "payment-notifications-94adf",
+    storageBucket: "payment-notifications-94adf.appspot.com",
+    messagingSenderId: "591219931678",
+    appId: "1:591219931678:web:1757fdb619e83f1a970c0f",
+    measurementId: "G-6YXPQ1DRLY"
 };
 
 firebase.initializeApp(firebaseConfig);
